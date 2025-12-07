@@ -2,6 +2,7 @@
 import psycopg2
 from database import get_db_connection
 from models import UserCreate, UserResponse
+from security import hash_password
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -22,6 +23,8 @@ async def create_user(user: UserCreate, conn = Depends(get_db_connection)):
                 raise HTTPException(status_code=500, detail="Роль 'player' не найдена")
             
             role_id = role_result['id']
+
+            hashed_password = hash_password(user.password)
             
             cur.execute("""
                 INSERT INTO users (username, password, role_id, first_name, surname, age, mail, phone_number)
