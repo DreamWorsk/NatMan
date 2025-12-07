@@ -52,6 +52,11 @@ CREATE_TABLES_QUERIES = [
         longitude DOUBLE PRECISION NOT NULL CHECK (longitude BETWEEN -180 AND 180),
         latitude  DOUBLE PRECISION NOT NULL CHECK (latitude BETWEEN -90 AND 90),
         mark_name VARCHAR(150) UNIQUE,
+        description TEXT,
+        address TEXT,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        updated_at TIMESTAMPTZ DEFAULT NOW(),
+        is_active BOOLEAN DEFAULT TRUE,
         CONSTRAINT uq_coordinates UNIQUE (longitude, latitude)
     );
     """,
