@@ -3,6 +3,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from typing import Optional
 import secrets
 from database import get_db_connection
+from security import verify_password # Импорт функции верификации пароля из security.py
 
 security = HTTPBasic()
 
@@ -16,7 +17,7 @@ def authenticate_user(username: str, password: str, conn) -> Optional[dict]:
         """, (username,))
         user = cur.fetchone()
         
-        if user and user['password'] == password:
+        if user and verify_password(password, user['password']): # Использование verify_password вместо прямого сравнения
             return {
                 'id': user['id'],
                 'username': user['username'],
