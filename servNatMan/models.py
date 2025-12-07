@@ -31,6 +31,8 @@ class MarkCreate(BaseModel):
     longitude: float
     latitude: float
     mark_name: str
+    description: str = ""
+    address: str = ""
 
 class MarkResponse(BaseModel):
     id: int
@@ -38,6 +40,11 @@ class MarkResponse(BaseModel):
     longitude: float
     latitude: float
     mark_name: str
+    description: str
+    address: str
+    created_at: str
+    updated_at: str
+    is_active: bool
 
 class GameCreate(BaseModel):
     start_time: str
