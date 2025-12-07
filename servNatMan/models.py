@@ -3,7 +3,7 @@ from typing import Optional, List
 
 class UserCreate(BaseModel):
     username: str
-    password: str  # ← ИЗМЕНИТЕ с user_password на password
+    password: str  
     first_name: str
     surname: str
     age: int
@@ -86,3 +86,18 @@ class AuthResponse(BaseModel):
 class RoleResponse(BaseModel):
     id: int
     role_name: str
+class RecognitionRequest(BaseModel):
+    image: str  # base64 encoded image
+
+class RecognizedObject(BaseModel):
+    name: str
+    confidence: float
+    description: str
+    interesting_fact: str
+
+class RecognitionResponse(BaseModel):
+    success: bool
+    objects: List[RecognizedObject] = []
+    error: Optional[str] = None
+from pydantic import BaseModel
+from typing import List, Optional

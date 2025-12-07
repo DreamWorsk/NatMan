@@ -7,7 +7,6 @@ from database import get_db_connection
 security = HTTPBasic()
 
 def authenticate_user(username: str, password: str, conn) -> Optional[dict]:
-    """Аутентификация пользователя"""
     with conn.cursor() as cur:
         cur.execute("""
             SELECT u.id, u.username, u.password, u.first_name, u.surname, r.role_name 
@@ -21,8 +20,8 @@ def authenticate_user(username: str, password: str, conn) -> Optional[dict]:
             return {
                 'id': user['id'],
                 'username': user['username'],
-                'first_name': user['first_name'],  # ← ДОБАВЬТЕ
-                'surname': user['surname'],        # ← ДОБАВЬТЕ
+                'first_name': user['first_name'],
+                'surname': user['surname'],
                 'role': user['role_name']
             }
     return None

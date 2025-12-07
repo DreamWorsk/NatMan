@@ -45,14 +45,12 @@ const HomeScreen = () => {
 
   // Функции для навигации (пока заглушки)
   const navigateToCamera = () => {
-    Alert.alert('Info', 'Camera screen will be implemented soon!');
-    // router.push('/camera');
-  };
+  router.push('/camera');
+};
 
   const navigateToTickets = () => {
-    Alert.alert('Info', 'Tickets screen will be implemented soon!');
-    // router.push('/tickets');
-  };
+  router.push('/tickets');
+};
 
   const navigateToProfile = () => {
     Alert.alert('Info', 'Profile screen will be implemented soon!');
@@ -60,7 +58,7 @@ const HomeScreen = () => {
   };
 
   const navigateToMap = () => {
-    Alert.alert('Info', 'Map screen will be implemented soon!');
+    router.push('/map');
     // router.push('/map');
   };
 

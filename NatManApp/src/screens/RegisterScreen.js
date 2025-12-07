@@ -23,21 +23,19 @@ const RegisterScreen = () => {
     try {
       console.log('Starting registration...'); // Для отладки
       
-      // Разделяем полное имя на first_name и surname
       const nameParts = name.split(' ');
       const firstName = nameParts[0] || '';
       const surname = nameParts.slice(1).join(' ') || 'User';
       
-      // Подготовка данных для регистрации
-      const userData = {
-        username: email, // Используем email как username
-        password: password,
-        first_name: firstName,
-        surname: surname,
-        age: 25, // Можно добавить поле для возраста позже
-        mail: email,
-        phone_number: "+79990000000" // Можно добавить поле для телефона позже
-      };
+       const userData = {
+      username: email,
+      password: password,
+      first_name: firstName,
+      surname: surname,
+      age: 25,                    // ← ОБЯЗАТЕЛЬНОЕ поле
+      mail: email,
+      phone_number: "+7992340000" // ← ОБЯЗАТЕЛЬНОЕ поле
+    };
 
       console.log('Sending registration data:', userData); // Для отладки
 
@@ -80,8 +78,8 @@ const RegisterScreen = () => {
           source={require('../../assets/images/logo.png')} 
           style={globalStyles.logo}
         />
-        <Text style={globalStyles.title}>Create Account</Text>
-        <Text style={globalStyles.subtitle}>Sign up to get started</Text>
+        <Text style={globalStyles.title}>Регистрация</Text>
+        <Text style={globalStyles.subtitle}>Зарегестрируйтесь чтобы начать</Text>
         
         <AuthForm
           type="register"

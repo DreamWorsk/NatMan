@@ -2,7 +2,7 @@
 from psycopg2.extras import RealDictCursor
 
 DB_CONFIG = {
-    "dbname": "Lykomor",
+    "dbname": "lykomor",
     "user": "postgres", 
     "password": "root",
     "host": "localhost",

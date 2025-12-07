@@ -9,7 +9,7 @@ from models import UserLogin, AuthResponse
 from authorization import authenticate_user, security
 
 
-from routers import users, teams, marks, games, regions, tasks, roles
+from routers import users, teams, marks, games, regions, tasks, roles, statues
 
 app = FastAPI(title="NetMan")
 
@@ -21,6 +21,7 @@ app.include_router(games.router)
 app.include_router(regions.router)
 app.include_router(tasks.router)
 app.include_router(roles.router)
+app.include_router(statues.router)
 
 # Эндпоинты авторизации
 @app.post("/auth/login", response_model=AuthResponse)
@@ -66,4 +67,4 @@ app.add_middleware(
 )
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)  # ← 0.0.0.0 вместо 127.0.0.1
+    uvicorn.run(app, host="0.0.0.0", port=8000)

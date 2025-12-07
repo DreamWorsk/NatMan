@@ -13,7 +13,7 @@ import { router } from 'expo-router';
 import AuthForm from '../components/AuthForm';
 import { authService } from '../services/auth';
 import { storeData } from '../utils/storage';
-import { globalStyles } from '../styles/global'; // ← Импортируем общие стили
+import { globalStyles } from '../styles/global';
 
 const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -46,8 +46,8 @@ const LoginScreen = () => {
           source={require('../../assets/images/logo.png')} 
           style={globalStyles.logo}
         />
-        <Text style={globalStyles.title}>Welcome Back</Text>
-        <Text style={globalStyles.subtitle}>Sign in to your account</Text>
+        <Text style={globalStyles.title}>С возвращением!</Text>
+        <Text style={globalStyles.subtitle}>Войдите в свой аккаунт</Text>
         
         <AuthForm
           type="login"

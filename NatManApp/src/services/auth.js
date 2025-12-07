@@ -1,18 +1,25 @@
-// Заглушка для API - замените на реальные endpoints
-const API_BASE_URL = 'localhost:8000';
+import axios from 'axios';
+const API_BASE_URL = 'http://217.114.14.77:8002';
 
 export const authService = {
   async login(username, password) {
     try {
-      console.log('Attempting login to:', `${API_BASE_URL}/auth/login`);
+      console.log('🔐 LOGIN DEBUG START ==========');
+      console.log('URL:', `${API_BASE_URL}/auth/login`);
+      console.log('Data:', { username, password });
       
       const response = await axios.post(`${API_BASE_URL}/auth/login`, {
         username,
         password
+      }, {
+        timeout: 10000, // 10 секунд таймаут
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
       });
 
-      console.log('Login response:', response.data);
-
+      console.log('✅ LOGIN SUCCESS:', response.data);
       return {
         success: true,
         token: response.data.access_token,
@@ -26,7 +33,23 @@ export const authService = {
         message: "Login successful"
       };
     } catch (error) {
-      console.log('Login error:', error.response?.data || error.message);
+      console.log('❌ LOGIN FAILED:');
+      console.log('Error name:', error.name);
+      console.log('Error message:', error.message);
+      console.log('Error code:', error.code);
+      console.log('Is AxiosError?', error.isAxiosError);
+      
+      if (error.response) {
+        console.log('Response status:', error.response.status);
+        console.log('Response data:', error.response.data);
+        console.log('Response headers:', error.response.headers);
+      } else if (error.request) {
+        console.log('No response received. Request was made but no response.');
+        console.log('Request:', error.request);
+      }
+      
+      console.log('Full error object:', JSON.stringify(error, null, 2));
+      
       if (error.response && error.response.data && error.response.data.detail) {
         throw new Error(error.response.data.detail);
       } else {
@@ -37,53 +60,45 @@ export const authService = {
 
   async register(userData) {
     try {
-      console.log('Attempting registration to:', `${API_BASE_URL}/users/`);
+      console.log('📝 REGISTER DEBUG START ==========');
+      console.log('URL:', `${API_BASE_URL}/users/`);
+      console.log('Full userData:', JSON.stringify(userData, null, 2));
       
-      const response = await axios.post(`${API_BASE_URL}/users/`, userData);
+      const response = await axios.post(`${API_BASE_URL}/users/`, userData, {
+        timeout: 10000,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
       
-      console.log('Registration response:', response.data);
-
+      console.log('✅ REGISTER SUCCESS:');
+      console.log('Status:', response.status);
+      console.log('Data:', response.data);
+      
       return {
         success: true,
         message: response.data.message,
         user_id: response.data.user_id
       };
     } catch (error) {
-      console.log('Registration error:', error.response?.data || error.message);
+      console.log('❌ REGISTER FAILED:');
+      console.log('Error name:', error.name);
+      console.log('Error message:', error.message);
+      console.log('Error code:', error.code);
+      
+      if (error.response) {
+        console.log('Response status:', error.response.status);
+        console.log('Response data:', error.response.data);
+      } else if (error.request) {
+        console.log('No response received - request was made but no response');
+      }
+      
       if (error.response && error.response.data && error.response.data.detail) {
         throw new Error(error.response.data.detail);
       } else {
         throw new Error('Network error or server is down');
       }
-    }
-  }
-  
-};
-export const connectionTest = {
-  async testConnection() {
-    try {
-      console.log('Testing connection to:', API_BASE_URL);
-      const response = await axios.get(`${API_BASE_URL}/`);
-      console.log('Connection test response:', response.data);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.log('Connection test failed:', error.message);
-      return { 
-        success: false, 
-        error: error.message,
-        details: error.response?.data 
-      };
-    }
-  },
-
-  async testUsersEndpoint() {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/users/`);
-      console.log('Users endpoint test:', response.data);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.log('Users endpoint test failed:', error.message);
-      return { success: false, error: error.message };
     }
   }
 };
