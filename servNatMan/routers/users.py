@@ -30,7 +30,7 @@ async def create_user(user: UserCreate, conn = Depends(get_db_connection)):
                 INSERT INTO users (username, password, role_id, first_name, surname, age, mail, phone_number)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 RETURNING id
-            """, (user.username, user.password, role_id, user.first_name, 
+            """, (user.username, hashed_password, role_id, user.first_name, 
                   user.surname, user.age, user.mail, user.phone_number))
             
             new_user_id = cur.fetchone()['id']
