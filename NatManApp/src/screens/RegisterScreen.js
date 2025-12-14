@@ -1,41 +1,47 @@
-import React, { useState } from 'react';
+import { router } from 'expo-router';
+import { useState } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Image
+  Text,
+  TouchableOpacity
 } from 'react-native';
-import { router } from 'expo-router';
-import AuthForm from '../components/AuthForm';
+import RegisterForm from '../components/RegisterForm'; // Assuming the path is similar to AuthForm
 import { authService } from '../services/auth';
-import { storeData } from '../utils/storage';
 import { globalStyles } from '../styles/global'; // ← Импортируем общие стили
+import { storeData } from '../utils/storage';
 
 const RegisterScreen = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleRegister = async (email, password, name) => {
+  const handleRegister = async (firstName, surname, age, phoneNumber, email, password) => {
+    if (!firstName || !surname || !age || !phoneNumber || !email || !password) {
+      Alert.alert('Error', 'All fields are required');
+      return;
+    }
+
+    const parsedAge = parseInt(age);
+    if (isNaN(parsedAge)) {
+      Alert.alert('Error', 'Age must be a valid number');
+      return;
+    }
+
     setLoading(true);
     try {
       console.log('Starting registration...'); // Для отладки
       
-      const nameParts = name.split(' ');
-      const firstName = nameParts[0] || '';
-      const surname = nameParts.slice(1).join(' ') || 'User';
-      
-       const userData = {
-      username: email,
-      password: password,
-      first_name: firstName,
-      surname: surname,
-      age: 25,                    // ← ОБЯЗАТЕЛЬНОЕ поле
-      mail: email,
-      phone_number: "+7992340000" // ← ОБЯЗАТЕЛЬНОЕ поле
-    };
+      const userData = {
+        username: email,
+        password: password,
+        first_name: firstName,
+        surname: surname,
+        age: parsedAge,
+        mail: email,
+        phone_number: phoneNumber
+      };
 
       console.log('Sending registration data:', userData); // Для отладки
 
@@ -63,11 +69,12 @@ const RegisterScreen = () => {
       }
     } catch (error) {
       console.log('Registration error:', error); // Для отладки
-      Alert.alert('Registration Error', error.message);
+      Alert.alert('Registration Error', error.message || 'An error occurred');
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <KeyboardAvoidingView
       style={globalStyles.container}
@@ -79,10 +86,9 @@ const RegisterScreen = () => {
           style={globalStyles.logo}
         />
         <Text style={globalStyles.title}>Регистрация</Text>
-        <Text style={globalStyles.subtitle}>Зарегестрируйтесь чтобы начать</Text>
+        <Text style={globalStyles.subtitle}>Зарегистрируйтесь чтобы начать</Text>
         
-        <AuthForm
-          type="register"
+        <RegisterForm
           onSubmit={handleRegister}
           loading={loading}
         />

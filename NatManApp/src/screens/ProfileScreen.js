@@ -103,6 +103,9 @@ const ProfileScreen = () => {
             </Text>
             <Text style={styles.userEmail}>{user.username}</Text>
             <Text style={styles.userRole}>{user.role}</Text>
+            <Text style={styles.userDetail}>Возраст: {user.age}</Text>
+            <Text style={styles.userDetail}>Телефон: {user.phone_number}</Text>
+            <Text style={styles.userDetail}>Почта: {user.mail}</Text>
           </View>
         </View>
 
@@ -216,6 +219,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#999',
     textTransform: 'capitalize',
+    marginBottom: 4,
+  },
+  userDetail: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
   },
   statsSection: {
     backgroundColor: '#fff',
